@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const markDown = require('./src/generateMarkdown');
 
 const managerQuestions = [
   {
@@ -120,7 +121,7 @@ function addIntern() {
 }
 
 function writeToHtml(teamData) {
-  fs.appendFile("./dist/index.html", teamData, (err) => {
+  fs.writeFile("./dist/index.html", markDown(teamData), (err) => {
     err ? console.error(err) : console.log("Success!");
   });
 }

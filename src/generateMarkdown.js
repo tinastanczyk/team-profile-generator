@@ -1,4 +1,6 @@
-function renderCard(data) {
+// const Employee = require('./lib/Employee.class');
+
+function renderCard(emp) {
   
   return `<section class="col">
   <article class="card border-primary mb-3" style="max-width: 18rem">
@@ -10,7 +12,7 @@ function renderCard(data) {
 </section>`;
 }
 
-function generateMarkdown(data) {
+function generateMarkdown(emp) {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,7 +34,7 @@ function generateMarkdown(data) {
     </header>
     <main>
       <section class="row row-cols-1 row-cols-md-3 g-4">
-        ${renderCard(data)}
+        ${renderCard(emp)}
       </section>
     </main>
   </body>

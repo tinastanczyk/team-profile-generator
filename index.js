@@ -1,6 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const markDown = require('./src/generateMarkdown');
+const Employee = require('./lib/Employee.class');
+const Manager = require('./lib/Manager.class');
+const Engineer = require('./lib/Engineer.class');
+const Intern = require('./lib/Intern.class');
+const teamData = [];
 
 const managerQuestions = [
   {
@@ -78,8 +83,8 @@ const internQuestions = [
   },
   {
     type: "input",
-    message: `Enter the intern's Github username: `,
-    name: "internGithub",
+    message: `Enter the intern's school: `,
+    name: "internSchool",
   },
   {
     type: "list",
@@ -91,11 +96,14 @@ const internQuestions = [
 
 function addEngineer() {
   inquirer.prompt(engineerQuestions).then((engineerData) => {
+    const engineer = new Engineer();
     switch (engineerData.addToTeam) {
       case "Add an Engineer":
+        writeToHtml(engineerData);
         addEngineer();
         break;
       case "Add an Intern":
+        writeToHtml(engineerData);
         addIntern();
         break;
       case "Finish building my team":
@@ -105,12 +113,15 @@ function addEngineer() {
   });
 }
 function addIntern() {
+  const intern = new Intern();
   inquirer.prompt(internQuestions).then((internData) => {
     switch (internData.addToTeam) {
       case "Add an Engineer":
+        writeToHtml(internData);
         addEngineer();
         break;
       case "Add an Intern":
+        writeToHtml(internData);
         addIntern();
         break;
       case "Finish building my team":
@@ -120,23 +131,33 @@ function addIntern() {
   });
 }
 
-function writeToHtml(teamData) {
-  fs.writeFile("./dist/index.html", markDown(teamData), (err) => {
-    err ? console.error(err) : console.log("Success!");
-  });
+function writeToHtml(data) {
+  
+  teamData.push(data);
+  console.log(teamData);
+  // fs.writeFile("./dist/index.html", markDown(teamData), (err) => {
+  //   err ? console.error(err) : console.log("Success!");
+  // //});
 }
 
 function init() {
   inquirer.prompt(managerQuestions).then((managerData) => {
+    const manager = new Manager();
+    manager.name = managerData.managerName;
+    manager.id = managerData.managerId;
+    manager.email = managerData.managerEmail;
+    manager.officeNumber = managerData.managerOffice;
     switch (managerData.addToTeam) {
       case "Add an Engineer":
+        writeToHtml(manager);
         addEngineer();
         break;
       case "Add an Intern":
+        writeToHtml(manager);
         addIntern();
         break;
       case "Finish building my team":
-        writeToHtml(managerData);
+        writeToHtml(manager);
         break;
     }
   });

@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const markDown = require('./src/generateMarkdown');
+const markDown = require('./src/generateHTML');
 const Employee = require('./lib/Employee.class');
 const Manager = require('./lib/Manager.class');
 const Engineer = require('./lib/Engineer.class');
@@ -97,47 +97,55 @@ const internQuestions = [
 function addEngineer() {
   inquirer.prompt(engineerQuestions).then((engineerData) => {
     const engineer = new Engineer();
+    engineer.name = engineerData.engineerName;
+    engineer.id = engineerData.engineerId;
+    engineer.email = engineerData.engineerEmail;
+    engineer.github = engineerData.engineerGithub;
     switch (engineerData.addToTeam) {
       case "Add an Engineer":
-        writeToHtml(engineerData);
+        teamData.push(engineer);
         addEngineer();
         break;
       case "Add an Intern":
-        writeToHtml(engineerData);
+        teamData.push(engineer);
         addIntern();
         break;
       case "Finish building my team":
-        writeToHtml(engineerData);
+        teamData.push(engineer);
+        writeToHtml();
         break;
     }
   });
 }
 function addIntern() {
-  const intern = new Intern();
   inquirer.prompt(internQuestions).then((internData) => {
+    const intern = new Intern();
+    intern.name = internData.internName;
+    intern.id = internData.internId;
+    intern.email = internData.internEmail;
+    intern.school = internData.internSchool;
     switch (internData.addToTeam) {
       case "Add an Engineer":
-        writeToHtml(internData);
+        teamData.push(intern);
         addEngineer();
         break;
       case "Add an Intern":
-        writeToHtml(internData);
+        teamData.push(intern);
         addIntern();
         break;
       case "Finish building my team":
-        writeToHtml(internData);
+        teamData.push(intern);
+        writeToHtml();
         break;
     }
   });
 }
 
-function writeToHtml(data) {
-  
-  teamData.push(data);
+function writeToHtml() {
   console.log(teamData);
-  // fs.writeFile("./dist/index.html", markDown(teamData), (err) => {
-  //   err ? console.error(err) : console.log("Success!");
-  // //});
+  fs.writeFile("./dist/index.html", markDown(teamData), (err) => {
+    err ? console.error(err) : console.log("Success!");
+  });
 }
 
 function init() {
@@ -149,15 +157,16 @@ function init() {
     manager.officeNumber = managerData.managerOffice;
     switch (managerData.addToTeam) {
       case "Add an Engineer":
-        writeToHtml(manager);
+        teamData.push(manager);
         addEngineer();
         break;
       case "Add an Intern":
-        writeToHtml(manager);
+        teamData.push(manager);
         addIntern();
         break;
       case "Finish building my team":
-        writeToHtml(manager);
+        teamData.push(manager);
+        writeToHtml();
         break;
     }
   });

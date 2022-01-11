@@ -1,12 +1,13 @@
+// importing inquirer package, filesystem, htmlgenerator, manager class, engineer class and intern class.
 const inquirer = require("inquirer");
 const fs = require("fs");
-const markDown = require('./src/generateHTML');
-const Employee = require('./lib/Employee.class');
+const htmlGen = require('./src/generateHTML');
 const Manager = require('./lib/Manager.class');
 const Engineer = require('./lib/Engineer.class');
 const Intern = require('./lib/Intern.class');
+// initialized an array to pass in manager, engineer and intern objects to pass into htmlgenerator file
 const teamData = [];
-
+// prompts for entering manager, engineer and intern data
 const managerQuestions = [
   {
     type: "input",
@@ -93,14 +94,16 @@ const internQuestions = [
     name: "addToTeam",
   },
 ];
-
+// using inquirer package to prompt user to enter engineer data
 function addEngineer() {
   inquirer.prompt(engineerQuestions).then((engineerData) => {
+    // creating a new instance of engineer every time addEngineer() is called and setting user input to object's key values
     const engineer = new Engineer();
     engineer.name = engineerData.engineerName;
     engineer.id = engineerData.engineerId;
     engineer.email = engineerData.engineerEmail;
     engineer.github = engineerData.engineerGithub;
+    // if the user selects one of the prompts from the menu list then different functions are called, but the new engineer objects is always pushed into the teamData array
     switch (engineerData.addToTeam) {
       case "Add an Engineer":
         teamData.push(engineer);
@@ -117,13 +120,16 @@ function addEngineer() {
     }
   });
 }
+// using inquirer package to prompt user to enter intern data
 function addIntern() {
   inquirer.prompt(internQuestions).then((internData) => {
+    // creating a new instance of intern every time addIntern() is called and setting user input to object's key values
     const intern = new Intern();
     intern.name = internData.internName;
     intern.id = internData.internId;
     intern.email = internData.internEmail;
     intern.school = internData.internSchool;
+    // if the user selects one of the prompts from the menu list then different functions are called, but the new intern objects is always pushed into the teamData array
     switch (internData.addToTeam) {
       case "Add an Engineer":
         teamData.push(intern);
@@ -140,21 +146,22 @@ function addIntern() {
     }
   });
 }
-
+// this function creates a new index.html file in desired path and writes what htmlGen returns after teamData is passed in, returns an error if it cannot write to file
 function writeToHtml() {
-  console.log(teamData);
-  fs.writeFile("./dist/index.html", markDown(teamData), (err) => {
+  fs.writeFile("./dist/index.html", htmlGen(teamData), (err) => {
     err ? console.error(err) : console.log("Success!");
   });
 }
-
+// this function initializes the application by prompting the user for the manager's data using the inquirer package
 function init() {
   inquirer.prompt(managerQuestions).then((managerData) => {
+    // a new instance of manager is created every time the application runs and the user's inputs to the object's key values
     const manager = new Manager();
     manager.name = managerData.managerName;
     manager.id = managerData.managerId;
     manager.email = managerData.managerEmail;
     manager.officeNumber = managerData.managerOffice;
+    // if the user selects one of the prompts from the menu list then different functions are called, but the new intern objects is always pushed into the teamData array
     switch (managerData.addToTeam) {
       case "Add an Engineer":
         teamData.push(manager);
@@ -171,5 +178,4 @@ function init() {
     }
   });
 }
-
 init();

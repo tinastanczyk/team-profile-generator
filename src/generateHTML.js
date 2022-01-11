@@ -1,5 +1,3 @@
-// const Employee = require('./lib/Employee.class');
-
 function renderCard(emp) {
   let particular = "";
   switch(emp.getRole()){

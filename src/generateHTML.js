@@ -22,7 +22,7 @@ function renderCard(emp) {
       <article class="card-body border-success bg-light">
         <ul class="list-group list-group-flush border">
           <li class="list-group-item">ID: ${emp.getId()}</li>
-          <li class="list-group-item">Email: ${emp.getEmail()}</li>
+          <li class="list-group-item">Email: <a href="mailto:${emp.getEmail()}">${emp.getEmail()}</a></li>
           <li class="list-group-item">${particular} </li>
         </ul>
       </article>

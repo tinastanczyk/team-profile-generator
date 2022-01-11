@@ -7,7 +7,7 @@ function renderCard(emp) {
       particular = `Office Number: ${emp.officeNumber}`;
       break;
     case 'Engineer': 
-      particular = `Github: ${emp.github}`;
+      particular = `Github: <a href="https://github.com/${emp.github}" target="_blank">${emp.github}</a>`;
       break;
     case 'Intern':
       particular = `School: ${emp.school}`;

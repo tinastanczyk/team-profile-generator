@@ -178,4 +178,5 @@ function init() {
     }
   });
 }
+// calling the function to start the application
 init();

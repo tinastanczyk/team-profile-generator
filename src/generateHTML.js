@@ -1,3 +1,5 @@
+// function is called to generate html text for the manager, engineer or intern card, respectively
+// particular gets added depending on the role of the object
 function renderCard(emp) {
   let particular = "";
   switch(emp.getRole()){
@@ -27,9 +29,13 @@ function renderCard(emp) {
   </article>
 </section>`;
 }
-
+// creates the html text to be written in the file
 function generateHTML(emp) {
+  // create an array to hold all cards created
   let cards = [];
+  // goes through the array of objects passed in from index.js and checks the role of each object
+  // pushes the manager, engineer or intern card to the cards array, respective to the role of the emp object
+  // joins the cards array as a string to be inserted into the html text returned
   emp.map(member => {
     switch(member.getRole()){
       case 'Manager':

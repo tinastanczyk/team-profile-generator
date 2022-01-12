@@ -13,7 +13,7 @@
 
   ## Usage
   Run 'node index.js' in your local terminal.
-  ![image](./teamGen-screenshot.png)
+  ![image](teamGen-screenshot.png)
 
   [Link to Video](https://drive.google.com/file/d/15g8fzTyhKxoVs1-rofxSI0967NcJ2n-Y/view?usp=sharing)
   
